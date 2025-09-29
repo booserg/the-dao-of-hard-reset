@@ -17,31 +17,25 @@ Vibe coding is a development methodology that combines structured iteration with
 1. **Set up your project structure**:
    ```
    your-project/
-   ├── development/           # Store iteration prompts here
+   ├── development/           # Store drafts and final prompts here
    ├── playground/           # Isolated experimentation
+   ├── roadmap.md            # Track planned features
    └── [your source code]
    ```
 
-2. **Copy the prompt template**:
-   ```bash
-   cp resources/prompt-template.md development/1-your-feature.md
-   ```
-
-3. **Fill in the template** with your feature requirements
-
-4. **Follow the iteration cycle**:
-   - Commit your prompt
-   - Implement the feature
-   - Test and evaluate
-   - If unsatisfied: reset, refine prompt, repeat
-   - If satisfied: commit and move on
+2. **Follow the new 4-phase workflow**:
+   - **Roadmap**: Add feature to roadmap with short description
+   - **Draft**: Create freeform feature description (user story style)
+   - **Refine**: Work with Claude to clarify and improve the draft
+   - **Prompt**: Convert refined draft to structured prompt using template
+   - **Implement**: Use final prompt for implementation
 
 ## Repository Contents
 
 ### 📋 [approach.md](approach.md)
 The complete methodology guide covering:
 - Prerequisites and setup
-- 4-phase workflow (Planning → Implementation → Quality Gate → Decision)
+- 7-phase workflow (Roadmap → Draft → Refine → Prompt → Implementation → Quality Gate → Decision)
 - Playground development strategy
 - Success metrics
 
@@ -53,26 +47,32 @@ Comprehensive template for creating feature development prompts with sections fo
 - Implementation guidance
 
 ### 📖 [resources/template-usage-guide.md](resources/template-usage-guide.md)
-Practical guide for using the prompt template effectively:
-- Quick start instructions
-- Tips for better prompts
+Practical guide for the new workflow:
+- Draft creation tips
+- Claude refinement process
+- Template conversion guidance
 - Common iteration patterns
-- Troubleshooting advice
 
 ## The Workflow
 
 ```mermaid
 graph TD
-    A[Copy Prompt Template] --> B[Fill Requirements]
-    B --> C[Commit Prompt]
-    C --> D[Implement Feature]
-    D --> E[Test & Evaluate]
-    E --> F{Quality Gate}
-    F -->|Satisfactory| G[Commit Changes]
-    F -->|Needs Work| H[Hard Reset]
-    H --> I[Update Prompt]
-    I --> C
-    G --> J[Next Feature]
+    A[Update Roadmap] --> B[Create Draft]
+    B --> C[Refine with Claude]
+    C --> D{Draft Complete?}
+    D -->|No| C
+    D -->|Yes| E[Create Final Prompt]
+    E --> F{Prompt Ready?}
+    F -->|No| E
+    F -->|Yes| G[Implement Feature]
+    G --> H[Test & Evaluate]
+    H --> I{Quality Gate}
+    I -->|Satisfactory| J[Commit Changes]
+    I -->|Needs Work| K[Hard Reset]
+    K --> L{Issue Type}
+    L -->|Requirements| C
+    L -->|Prompt| E
+    J --> M[Next Feature]
 ```
 
 ## When to Use This Approach
